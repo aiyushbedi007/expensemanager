@@ -267,7 +267,7 @@
     <label for="amount">
       Amount:  
     </label>
-    <input class="w-50" id="amount" [(ngModel)]="fname" [ngClass]="{ 'is-invalid': isSubmitted && f.amount.errors }" type="number" formControlName="amount" placeholder="How much ?">
+    <input class="w-50" id="amount" [(ngModel)]="amount" [ngClass]="{ 'is-invalid': isSubmitted && f.amount.errors }" type="number" formControlName="amount" placeholder="How much ?">
 
     <!-- error block -->
     <div class="invalid-feedback" *ngIf="isSubmitted && f.amount.errors">
@@ -275,7 +275,8 @@
     </div>
   </div>
   <div class="row">
-  <button class="btn btn-primary col-3 mx-auto" type="submit">Add a New Expense </button>
+  <button class="btn btn-primary col-3 mx-auto" *ngIf="flag" type="submit">Add a New Expense </button>
+  <button class="btn btn-primary col-3 mx-auto" *ngIf="!flag" (click)="edit()" type="submit">Edit Expense </button>
   </div>
   
 </div>
@@ -326,7 +327,8 @@
   </div>
   </div>
   <div class="row">
-    <button class="btn btn-primary col-3 mx-auto" type="submit">{{fbutton}}</button>
+    <button class="btn btn-primary col-3 mx-auto" *ngIf="zflag" type="submit">Add Friend</button>
+    <button class="btn btn-primary col-3 mx-auto" *ngIf="!zflag" (click)="fedit()" type="submit">Edit Friend</button>
     </div>
 
 </div>

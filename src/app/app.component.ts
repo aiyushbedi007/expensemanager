@@ -12,6 +12,10 @@ export class AppComponent implements OnInit {
   title = 'expensemanager';
   isSubmitted = false;
   isfSubmitted = false;
+  flag= true;
+  zflag= true;
+  a;
+  b;
   fname;
   fbutton="Add";
   // Currency Names
@@ -92,7 +96,6 @@ export class AppComponent implements OnInit {
     } else {
       this.friendsArray.push(this.friendForm.value);
       console.log(this.friendsArray);
-
       localStorage.setItem('friends', JSON.stringify(this.friendsArray));
       this.fdata = JSON.parse(localStorage.getItem('friends'));
       console.log(this.fdata);
@@ -112,14 +115,20 @@ export class AppComponent implements OnInit {
     this.date=id.date;
     this.currency=id.currency;
     this.amount=id.amount;
-    const a = this.getdata.indexOf(id);
-    this.getdata[a].name = this.name;
-    this.getdata[a].friends = this.friend;
-    this.getdata[a].types = this.type;
-    this.getdata[a].date = this.date;
-    this.getdata[a].currency = this.currency;
-    this.getdata[a].amount = this.amount;
+    this.flag = false;
+    this.a = this.getdata.indexOf(id);
+  }
+
+  edit(){
+    this.getdata[this.a].name = this.name;
+    this.getdata[this.a].friends = this.friend;
+    this.getdata[this.a].types = this.type;
+    this.getdata[this.a].date = this.date;
+    this.getdata[this.a].currency = this.currency;
+    this.getdata[this.a].amount = this.amount;
     localStorage.setItem('expense', JSON.stringify(this.getdata));
+    this.flag =true;
+    this.expenseForm.reset();    
   }
 
   onDeleteFriend(id){
@@ -134,12 +143,17 @@ export class AppComponent implements OnInit {
 
   onEditFriend(id){ 
     this.fname = id.fname;
-    this.fbutton="Edit";
-    const a = this.fdata.indexOf(id);
-    this.fdata[a].fname = this.fname;
+    this.zflag = false;
+    this.b= this.fdata.indexOf(id);
+  }
+
+  fedit(){
+    this.fdata[this.b].fname = this.fname;
     localStorage.setItem('friends', JSON.stringify(this.fdata));
     this.fdata = JSON.parse(localStorage.getItem('friends'));
     this.friendsArray=this.fdata;
+    this.zflag = true;
+    this.friendForm.reset(); 
   }
 
   ngOnInit() {
@@ -166,10 +180,10 @@ export class AppComponent implements OnInit {
       this.expenseForm.controls.types.patchValue(this.types[0].id);
     });
 
-    of(this.getFriends()).subscribe(friends => {
-      this.friendsArray = friends;
-      this.expenseForm.controls.friends.patchValue(this.friendsArray[0].fname);
-    });
+    // of(this.getFriends()).subscribe(friends => {
+    //   this.friendsArray = friends;
+    //   this.expenseForm.controls.friends.patchValue(this.friendsArray[0].fname);
+    // });
     
   }
 
